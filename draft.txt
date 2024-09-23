@@ -1,0 +1,93 @@
+// App.jsx
+import { Component } from 'react';
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Parent from './Parent';
+export class App extends Component {
+  state = {};
+  render() {
+    return (
+      <div>
+        <Parent/>
+      </div>
+    )
+  }
+}
+
+// Parent.jsx
+import React, { Component } from 'react'
+import Child from './Child';
+export default class Parent extends Component {
+    state = {
+        porducts : [{id:1 , name:"Mercedes" , price:15000000 , onSale:true , count:50},
+                    {id:2 , name:"BMW" , price:12000000 , onSale:true , count:40},
+                    {id:3 , name:"Porsche" , price:20000000 , onSale:false , count:15},
+                    {id:4 , name:"Ferrari" , price:3000000 , onSale:false , count:17},
+                    {id:5 , name:"Lamborghini" , price:35000000 , onSale:true , count:16},
+                    {id:6 , name:"Bugatti" , price:25000000 , onSale:true , count:20},
+                    {id:7 , name:"Rolls-Royce" , price:28000000 , onSale:true , count:25},
+                    {id:8 , name:"Bently" , price:30000000 , onSale:false , count:18},
+                    {id:9 , name:"Maclaren" , price:14000000 , onSale:false , count:12},
+                   ],
+    };
+    add = (index) => {
+      let porducts = [...this.state.porducts];
+      porducts[index].count++;
+      this.setState({porducts});
+    }
+    delete = (id) => {
+      let porducts = [...this.state.porducts];
+      porducts = porducts.filter((item)=>item.id!=id);
+      this.setState({porducts});
+    }
+  render() {
+    return (
+      <div>
+        <div className="container bg-dark">
+          <Child porducts={this.state.porducts} add={this.add} delete={this.delete}/>
+        </div>
+      </div>)
+  }
+}
+
+// Child.jsx
+import React, { Component } from 'react'
+export default class Child extends Component {
+  render() {
+    return (
+      <div className="row m-5">
+        {this.props.porducts.map((item,i)=>(
+          <div key={i} className="col-md-4 my-4">
+            <div className="myCard p-5 bg-warning position-relative">
+              <h1>{item.name}</h1>
+              <h2>{item.price}</h2>
+              <h3>{item.count}</h3>
+              {item.onSale?(<h4 className="sale position-absolute bg-success p-2 top-0 end-0">On Sale</h4>):("")}
+              <button onClick={()=>{this.props.add(i)}} className="btn btn-primary m-2">Add</button>
+              <button onClick={()=>{this.props.delete(item.id)}} className="btn btn-danger">Delete</button>
+            </div>
+          </div>
+          ))}
+      </div>
+    );
+  }
+}
+/*import React, { useState } from 'react'
+export default function Child() {
+  let [count,setCount] = useState(0);
+  function add(){
+    setCount(count+1);
+  }
+  return (
+        <div className="container bg-dark">
+          <div className="row m-5">
+            <div className="col-md-4 my-4">
+            <div className="myCard p-5 bg-warning position-relative">
+              <h1>Count : {count}</h1>
+              <button onClick={add} className="btn btn-primary m-2">Add</button>
+            </div>
+            </div>
+          </div>
+        </div>
+  )
+}*/

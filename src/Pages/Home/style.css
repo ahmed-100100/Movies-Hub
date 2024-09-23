@@ -1,0 +1,12 @@
+h2{
+    font-size: 28px;
+}
+.home p{
+    color: rgb(13, 110, 253);
+}
+.brdr{
+    width: 100%;
+    height: 1px;
+    background-color: #5d5a5aaf;
+    margin: 40px 0;
+}
